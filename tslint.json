@@ -1,0 +1,15 @@
+{
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
+  "rules": {
+    "curly": false,
+    "ordered-imports": true,
+    "interface-name": [true, "never-prefix"],
+    "quotemark": [true, "double"],
+    "max-line-length": [true, 120],
+    "prefer-const": true,
+    "no-console": false,
+    "no-any": true,
+    "typedef": true
+
+  }
+}
