@@ -1,12 +1,17 @@
-import {describe, expect, test} from "@jest/globals";
+import { describe, expect, test } from "@jest/globals";
+import { string } from "zod";
 import { User } from "../src/User/User";
 
 const user = new User("zerok-cell", "Duplex007");
 
 
+test("User auth and logout", async () => {
+  const auth = await user.authorize();
+  expect(auth.status).toBe(200);
+  expect(typeof auth.token === "string").toBe(true);
+  expect(user.token === auth.token).toBe(true);
 
-test("User auth and deauth",async () => {
-  expect(await user.authorize()).toBe(200)
-  expect(await user.deauthorize()).toBe(200)
 
-})
+  expect(await user.deauthorize()).toBe(200);
+
+});

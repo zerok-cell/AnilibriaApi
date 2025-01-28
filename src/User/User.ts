@@ -1,42 +1,48 @@
 import axios from "axios";
-import { Password } from "../Password/Password";
+import dotenv from "dotenv";
+
+// Загружаем переменные окружения из .env файла
+dotenv.config();
 
 
 export class User {
-  public token: string | undefined;
+  private privateToken: string | undefined;
   private readonly login: string;
   private readonly password: string;
-  private readonly baseUrl: string;
+  private readonly urlUser: string;
 
   constructor(login: string, password: string) {
     this.login = login;
     this.password = password;
-    this.baseUrl = "https://anilibria.top/api/v1/accounts/users/auth/";
+    this.urlUser = "https://anilibria.top/api/v1/accounts/users/auth/";
   }
 
+  public get token(){
+    return this.privateToken
+  }
   public authorize = async () => {
 
-    const fetchUrl = await axios.post(`${this.baseUrl}login/`, {
+    const fetchUrl = await axios.post<{ token: string }>(`${this.urlUser}login/`, {
       login: this.login,
       password: this.password
     });
-    this.token = fetchUrl.data.token;
-    return fetchUrl.status;
+    this.privateToken = fetchUrl.data.token;
+    return { status: fetchUrl.status, token: this.privateToken };
 
 
   };
   public deauthorize = async () => {
-    if (this.token) {
+    if (this.privateToken) {
       try {
-        const fetchUrl = await axios.post(`${this.baseUrl}logout/`, {}, {
+        const fetchUrl = await axios.post(`${this.urlUser}logout/`, {}, {
           headers: {
-            "Authorization": `Bearer ${this.token}`
+            "Authorization": `Bearer ${this.privateToken}`
           }
         });
-        delete this.token;
+        this.privateToken = undefined;
         return fetchUrl.status;
-      }catch (error) {
-        return error
+      } catch (error) {
+        return error;
       }
 
 
@@ -48,16 +54,15 @@ export class User {
 }
 
 
-const main = async () => {
-  const user = new User("zerok-cell", "Duplex007");
-  try {
-    const result = await user.authorize();
-    const password = new Password(user.token)
-    const x = await password.swapPasswordWithUseToken("Dupl32123", "Dupl32123");
-    console.log(x);
-  } catch (error) {
-    console.error("Ошибка авторизации:", error);
-  }
-};
-
-main();
+// const main = async () => {
+//   const user = new User("zerok-cell", "Duplex007");
+//
+//   try {
+//     const result = await user.authorize();
+//     console.log(result);
+//   } catch (error) {
+//     console.error("Ошибка авторизации:", error);
+//   }
+// };
+//
+// main();

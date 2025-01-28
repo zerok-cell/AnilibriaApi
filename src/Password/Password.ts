@@ -1,31 +1,31 @@
 import axios from "axios";
-import { User } from "../User/User";
 
 export class Password {
-  private readonly token: string | undefined;
-  private readonly baseUrl: string | undefined;
+   protected urlPassword: string;
 
-  constructor(token: string | undefined) {
-    this.token = token;
-    this.baseUrl = "https://anilibria.top/api/v1/accounts/users/auth/password/";
+  constructor() {
+    this.urlPassword = "https://anilibria.top/api/v1/accounts/users/auth/password/";
   }
 
+  /**
+   * Changes your password.
+   * The user must be logged in
+   */
+  public swapPasswordWithUseToken = async (token: string, password: string, passwordConfirmation: string) => {
 
-  public swapPasswordWithUseToken = async (password: string, passwordConfirmation: string) => {
-
-    const request = await axios.post(`${this.baseUrl}reset/`, {
+    const request = await axios.post(`${this.urlPassword}reset/`, {
       password,
       password_confirmation: passwordConfirmation,
-      token: this.token
+      token
     });
 
-    return request.status
+    return request.status;
   };
 
-  public sendEmail = async (email:string) => {
-   const request =  await axios.post(`${this.baseUrl}forget/`, {
-      email,
-    })
-    return request.status
-  }
+  public sendEmail = async (email: string) => {
+    const request = await axios.post(`${this.urlPassword}forget/`, {
+      email
+    });
+    return request.status;
+  };
 }
