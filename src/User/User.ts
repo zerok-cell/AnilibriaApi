@@ -25,6 +25,7 @@ export class User {
     const fetchUrl = await axios.post<{ token: string }>(`${this.urlUser}login/`, {
       login: this.login,
       password: this.password
+
     });
     this.privateToken = fetchUrl.data.token;
     return { status: fetchUrl.status, token: this.privateToken };
