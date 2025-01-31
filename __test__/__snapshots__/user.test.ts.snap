@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User auth and logout 1`] = `
+User {
+  "authorize": [Function],
+  "deauthorize": [Function],
+  "login": "zerok-cell",
+  "password": "Duplex007",
+  "privateToken": undefined,
+  "urlUser": "https://anilibria.top/api/v1/accounts/users/auth/",
+}
+`;

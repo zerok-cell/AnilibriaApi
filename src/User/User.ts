@@ -1,25 +1,31 @@
 import axios from "axios";
-import dotenv from "dotenv";
-
-// Загружаем переменные окружения из .env файла
-dotenv.config();
+import { configLoad } from "../lib/read_config";
 
 
+/**
+ * A class for interacting with endpoints related to the entrance user's account
+ * It is mandatory to accept the password and email address of the `anilibria` user.
+ */
 export class User {
   private privateToken: string | undefined;
   private readonly login: string;
   private readonly password: string;
-  private readonly urlUser: string;
+  private readonly urlUser: string = `${configLoad().app.url}accounts/users/auth/`;
+
 
   constructor(login: string, password: string) {
     this.login = login;
     this.password = password;
-    this.urlUser = "https://anilibria.top/api/v1/accounts/users/auth/";
   }
 
-  public get token(){
-    return this.privateToken
+  public get token() {
+    return this.privateToken;
   }
+
+  /**
+   * User authorization by `username` and `password`. Creating a user session,
+   * issuing an authorization token for use in cookies or in the Bearer Token
+   */
   public authorize = async () => {
 
     const fetchUrl = await axios.post<{ token: string }>(`${this.urlUser}login/`, {
@@ -32,6 +38,9 @@ export class User {
 
 
   };
+  /**
+   * Deauthorize the user
+   */
   public deauthorize = async () => {
     if (this.privateToken) {
       try {
@@ -48,22 +57,8 @@ export class User {
 
 
     } else {
-      return "Nothing token";
+      return { data: "Couldn\'t log in. The user is not logged in", status: 401 };
     }
 
   };
 }
-
-
-// const main = async () => {
-//   const user = new User("zerok-cell", "Duplex007");
-//
-//   try {
-//     const result = await user.authorize();
-//     console.log(result);
-//   } catch (error) {
-//     console.error("Ошибка авторизации:", error);
-//   }
-// };
-//
-// main();
