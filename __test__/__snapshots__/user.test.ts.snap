@@ -3,8 +3,8 @@
 exports[`User auth and logout 1`] = `
 User {
   "authorize": [Function],
-  "deauthorize": [Function],
   "login": "zerok-cell",
+  "logout": [Function],
   "password": "Duplex007",
   "privateToken": undefined,
   "urlUser": "https://anilibria.top/api/v1/accounts/users/auth/",

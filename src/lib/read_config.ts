@@ -12,14 +12,14 @@ export const ConfigSchema = z.object({
 
 type ConfigType = z.infer<typeof ConfigSchema>
 
-
-
 const configPath = path.join(__dirname,"config.yaml")
+/**
+ * @description Use exclusively inside THE library IS `NOT INTENDED FOR OUTDOOR USE`
+ * @return {ConfigType} Returns the config
+ */
 export const configLoad:()=>ConfigType =  ()=>{
   const file =  fs.readFileSync(configPath, "utf8")
   return  yaml.load(file) as ConfigType
 }
 
-const x = configLoad()
-console.log(ConfigSchema.parse(x));
 

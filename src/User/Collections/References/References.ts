@@ -1,4 +1,3 @@
-import axios from "axios";
 import { BaseInstrumental } from "../../Base";
 
 export class References extends BaseInstrumental{
@@ -9,37 +8,32 @@ export class References extends BaseInstrumental{
   }
 
   /**
-   * Returns a list of age ratings in the collections of the current user
+   * @description Returns a list of age ratings in the collections of the current user
    */
   public ageRatings = async () => {
-
-    return await this.requestOnUrlGet<Array<{
-      value: string,
-      label: string,
-      description: string
-    }>>("age-ratings");
+    return await this.requestUrl("GET",true,"age-ratings")
 
   };
   /**
-   * Returns a list of genres in the collections of the current user
+   * @description Returns a list of genres in the collections of the current user
    */
   public genRes = async () => {
-    return await this.requestOnUrlGet<Array<{
-      id: number,
-      name: string,
-    }>>("genres");
+
+    return await this.requestUrl("GET",true,"genres")
   };
   /**
-   * Returns a list of types in the collections of the current user
+   * @description Returns a list of types in the collections of the current user
    */
   public types = async () => {
 
-    return await this.requestOnUrlGet<Array<{ value: string, description: string }>>("types");
+    return await this.requestUrl("GET",true,"types")
+
 
   };
 
   public years = async () => {
-    return await this.requestOnUrlGet<number[]>("years");
+    return await this.requestUrl("GET",true,"years")
+
   };
 
 

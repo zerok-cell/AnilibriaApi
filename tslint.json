@@ -8,7 +8,8 @@
     "max-line-length": [true, 120],
     "prefer-const": true,
     "no-console": false,
-    "no-any": true,
+    "object-literal-sort-keys": false,
+    "no-any": false,
     "typedef": true
 
   }

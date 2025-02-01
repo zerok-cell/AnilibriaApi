@@ -8,8 +8,8 @@ const main = async () => {
 
   try {
     const result = await user.authorize();
-    const ref = new  Collections(user.token)
-    const age = await ref.ids()
+    const ref = new  References(user.tokenGet)
+    const age = await ref.genRes()
     console.log(age);
 
   } catch (error) {
