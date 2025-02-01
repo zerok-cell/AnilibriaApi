@@ -1,5 +1,5 @@
-import { TypeOfCollections } from "../../zod_scheme/collections.types";
-import { BaseInstrumental } from "../Base";
+import { TypeOfCollections } from "../zod_scheme/collections.types";
+import { BaseInstrumental } from "../User/Base";
 
 /*TODO releases api endpoint not correct*/
 

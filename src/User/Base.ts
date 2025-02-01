@@ -36,11 +36,11 @@ export class BaseInstrumental {
    * @param d Data in the form of {key:value}
    * @returns {Promise<Record<any,any>>} Status code(http code) and the data that came from the server
    */
-  protected requestUrl = async <T>(m: Method,
-                                   br: boolean,
-                                   url: string,
-                                   d?: Record<string, any>): Promise<Record<any, any>> => {
-    const { status, data } = await axios.request<T>({
+  protected requestUrl = async <AxiosType>(m: Method,
+                                           br: boolean,
+                                           url: string,
+                                           d?: Record<string, any>): Promise<Record<any, any>> => {
+    const { status, data } = await axios.request<AxiosType>({
       url: this.urlReferences + url,
       method: m, data: d, headers: {
         "Authorization": br && this.barerToken,

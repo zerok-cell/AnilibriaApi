@@ -1,5 +1,5 @@
-import { Collections } from "./User/Collections/Collections";
-import { References } from "./User/Collections/References/References";
+import { Collections } from "./Collections/Collections";
+import { References } from "./Collections/References/References";
 import { User } from "./User/User";
 
 

@@ -1,7 +1,7 @@
 {
   "name": "anilibria_api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Library for interacting with the anilibria api",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
