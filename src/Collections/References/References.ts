@@ -1,5 +1,10 @@
 import { BaseInstrumental } from "../../User/Base";
 
+
+/**
+ * @class References Class from endpoint References
+ * @extends BaseInstrumental
+ */
 export class References extends BaseInstrumental {
 
 
@@ -8,6 +13,7 @@ export class References extends BaseInstrumental {
   }
 
   /**
+   * @public
    * @description Returns a list of age ratings in the collections of the current user
    */
   public ageRatings = async () => {
@@ -15,6 +21,7 @@ export class References extends BaseInstrumental {
 
   };
   /**
+   * @public
    * @description Returns a list of genres in the collections of the current user
    */
   public genRes = async () => {
@@ -22,12 +29,15 @@ export class References extends BaseInstrumental {
     return await this.requestUrl("GET", true, "genres");
   };
   /**
+   * @public
    * @description Returns a list of types in the collections of the current user
    */
   public types = async () => {
     return await this.requestUrl("GET", true, "types");
   };
-
+  /**
+   * @public
+   */
   public years = async () => {
     return await this.requestUrl("GET", true, "years");
 

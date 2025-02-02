@@ -8,40 +8,39 @@ export const ageEnum = ["R0_PLUS", "R6_PLUS", "R12_PLUS", "R16_PLUS", "R18_PLUS"
 export const publishStatusesEnum = ["IS_ONGOING", "IS_NOT_ONGOING"] as const;
 export const productionStatusesEnum = ["IS_IN_PRODUCTION", "IS_NOT_IN_PRODUCTION"] as const;
 /**
- * @param {string}[page] Page
- * @param {number}[limit] Limit the returns releases
- * @param {array<number>}[f.genres] Unknown me
- * @param {string}[f.types]  The type of releases being returned, such as movies, dramas, and others.
- * See in the `typesEnum`
- * @param {string}[f.seasons]  Release Release Season. See in the `seasonsEnum`
- * @param {number}[f.years.from_year]  Minimum release year
- * @param {number}[f.years.to_year]  Maximum release year
- * @param {string}[f.search]  Key word from search
- * @param {string}[f.sorting]  Filters, they can be viewed in `sortingEnum`
- * @param {string}[f.age_ratings]  filters by age, all kinds of filters are available in `ageEnum`
- * @param {string}[f.publish_statuses] Whether a release is coming out or not (online or not), is in
- * `publishStatusesEnum`
- * @param {string}[f.production_statuses] Unknown me. See in `productionStatusesEnum`
- *@example
- * {
- *   page: '1',
+ * @property {string} [page] - Номер страницы.
+ * @property {number} [limit] - Количество релизов на странице.
+ * @property {Object} [f] - Объект с фильтрами.
+ * @property {number[]} [f.genres] - Массив идентификаторов жанров.
+ * @property {string} [f.types] - Тип релиза. См. `typesEnum`.
+ * @property {string} [f.seasons] - Сезон выпуска. См. `seasonsEnum`.
+ * @property {Object} [f.years] - Объект с годом выпуска.
+ * @property {number} [f.years.from_year] - Минимальный год выпуска.
+ * @property {number} [f.years.to_year] - Максимальный год выпуска.
+ * @property {string} [f.search] - Ключевое слово для поиска.
+ * @property {string} [f.sorting] - Сортировка. См. `sortingEnum`.
+ * @property {string} [f.age_ratings] - Возрастной рейтинг. См. `ageEnum`.
+ * @property {string} [f.publish_statuses] - Статус публикации. См. `publishStatusesEnum`.
+ * @property {string} [f.production_statuses] - Статус производства. См. `productionStatusesEnum`.
+ * @example
+ * const exampleRelease: ReleaseType = {
+ *   page: "1",
  *   limit: 10,
  *   f: {
  *     genres: [1, 2, 3],
- *     types: 'type1',
- *     seasons: 'summer',
+ *     types: "MOVIE",
+ *     seasons: "summer",
  *     years: {
- *       from_year: '2020',
- *       to_year: 2025
+ *       from_year: 2020,
+ *       to_year: 2023
  *     },
- *     search: 'example',
- *     sorting: 'asc',
- *     age_ratings: 'PG',
- *     publish_statuses: 'published',
- *     production_statuses: 'in_production'
+ *     search: "action",
+ *     sorting: "RATING_DESC",
+ *     age_ratings: "R12_PLUS",
+ *     publish_statuses: "IS_ONGOING",
+ *     production_statuses: "IS_IN_PRODUCTION"
  *   }
  * };
- *
  */
 export const ReleaseSchema = z.object({
   page: z.string().nonempty().optional(),

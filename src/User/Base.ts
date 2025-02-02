@@ -36,7 +36,7 @@ export class BaseInstrumental {
    * @param d Data in the form of {key:value}
    * @returns {Promise<Record<any,any>>} Status code(http code) and the data that came from the server
    */
-  protected requestUrl = async <AxiosType>(m: Method,
+  public requestUrl = async <AxiosType>(m: Method,
                                            br: boolean,
                                            url: string,
                                            d?: Record<string, any>): Promise<Record<any, any>> => {
