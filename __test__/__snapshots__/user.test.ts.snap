@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`User auth and logout 1`] = `
+User {
+  "authorize": [Function],
+  "login": "zerok-cell",
+  "logout": [Function],
+  "password": "Duplex007",
+}
+`;

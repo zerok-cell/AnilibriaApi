@@ -1,6 +1,4 @@
-import axios from "axios";
-import { configLoad } from "../lib/read_config";
-import { AuthType } from "../zod_scheme/auth.type";
+import { anilibria } from "../lib/settings";
 import { DataAndStatus } from "../zod_scheme/user.schema";
 
 
@@ -15,10 +13,8 @@ import { DataAndStatus } from "../zod_scheme/user.schema";
  * @since 1.0.0
  */
 export class User {
-  private privateToken: string | undefined;
   private readonly login: string;
   private readonly password: string;
-  private readonly urlUser: string = `${configLoad().app.url}accounts/users/auth/`;
 
 
   constructor(login: string, password: string) {
@@ -33,10 +29,12 @@ export class User {
    *   const user = User("my_login", "my_password")
    *   const token = user.tokenGet
    * }
-   * @return {string}
+   * @return {{ tokenBearer:string,token:string }}
    */
-  public get tokenGet(): string | undefined {
-    return this.privateToken;
+  public get tokenGet(): { tokenBearer: string, token: string } {
+    const tokenBearer = anilibria.defaults.headers.common.Authorization as string;
+    const token = anilibria.defaults.headers.common.Authorization as string;
+    return { tokenBearer, token: token.slice(7) };
   }
 
   /**
@@ -47,18 +45,20 @@ export class User {
    *   const user = User("my_login", "my_password")
    *   const result = await user.authorize()
    * }
-   * @returns {Promise<AuthType>} The operation status (http code) and the private token received as a result of the
-   * request
+   *  @returns {Promise<DataAndStatus<Record<string, string>>} The operation status (http code)
+   *  and the data received as a result of the request
+   *  @version 1.0.1
+   *
    */
-  public authorize = async (): Promise<AuthType> => {
+  public authorize = async (): Promise<DataAndStatus<{ token: string }>> => {
 
-    const fetchUrl = await axios.post<{ token: string }>(`${this.urlUser}login/`, {
+    const { status, data } = await anilibria.post<{ token: string }>(`/accounts/users/auth/login`, {
       login: this.login,
       password: this.password
 
     });
-    this.privateToken = fetchUrl.data.token;
-    return { status: fetchUrl.status, token: this.privateToken };
+    anilibria.defaults.headers.common.Authorization = "Bearer " + data.token;
+    return { data, status };
 
 
   };
@@ -66,20 +66,17 @@ export class User {
   /**
    * @description Makes the user log out by `deleting` the token from the instance
    * @description It won't work if there is no token.
-   * @returns {Promise<number | {data:string, status:number}>} | Status code(http) or `{data:string, status:number}`
+   * @returns {Promise<DataAndStatus<Record<string, any>>>} | Status code(http) or `{data:string, status:number}`
    * @throws {Error} The error may be related to the internal structure of the code, how you use this method,
    * or an error in the request.
+   * @version 1.0.1
    */
-  public logout = async (): Promise<number | DataAndStatus> => {
-    if (this.privateToken) {
+  public logout = async (): Promise<DataAndStatus<Record<string, any>>> => {
+    if (anilibria.defaults.headers.common.Authorization) {
       try {
-        const fetchUrl = await axios.post(`${this.urlUser}logout/`, {}, {
-          headers: {
-            "Authorization": `Bearer ${this.privateToken}`
-          }
-        });
-        this.privateToken = undefined;
-        return fetchUrl.status;
+        const { data, status } = await anilibria.post<{ token: null }>(`/accounts/users/auth/logout`);
+        anilibria.defaults.headers.common.Authorization = undefined;
+        return { data, status };
       } catch (error) {
         throw new Error(`There's been some kind of mistake. - ${error}`);
       }

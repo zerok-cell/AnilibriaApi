@@ -8,8 +8,8 @@ export const UserSchema = z.object({
 export const authUser = z.function().args(UserSchema)
 
 
-export interface DataAndStatus{
-  data:string,
+export interface DataAndStatus<T=string>{
+  data:T|string|null,
   status:number
 }
 export type UserType = z.infer<typeof UserSchema>
