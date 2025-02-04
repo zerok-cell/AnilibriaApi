@@ -1,6 +1,5 @@
 import { anilibria } from "../lib/settings";
 
-// TODO протестировать класс
 
 /**
  * @description A class for working with the functionality of changing and restoring a user's password.
