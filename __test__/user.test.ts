@@ -6,7 +6,7 @@ import { anilibria } from "../src/lib/settings";
 import { User } from "../src/User/User";
 
 const user = new User("zerok-cell", "Duplex007");
-
+const authMock =
 
 test("User auth and logout", async () => {
   const auth = await user.authorize();
@@ -17,6 +17,5 @@ test("User auth and logout", async () => {
 
   expect(await user.logout()).toStrictEqual({"data": {"token": null}, "status": 200});
   expect(user).toMatchSnapshot();
-
 });
 

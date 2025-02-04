@@ -13,6 +13,7 @@ import { DataAndStatus } from "../zod_scheme/user.schema";
  * @since 1.0.0
  */
 export class User {
+  private token: string | undefined;
   private readonly login: string;
   private readonly password: string;
 
@@ -49,6 +50,7 @@ export class User {
    *  and the data received as a result of the request
    *  @version 1.0.1
    *
+   *
    */
   public authorize = async (): Promise<DataAndStatus<{ token: string }>> => {
 
@@ -57,7 +59,8 @@ export class User {
       password: this.password
 
     });
-    anilibria.defaults.headers.common.Authorization = "Bearer " + data.token;
+    this.token = data.token;
+    anilibria.defaults.headers.common.Authorization = "Bearer " + this.token;
     return { data, status };
 
 
@@ -75,6 +78,7 @@ export class User {
     if (anilibria.defaults.headers.common.Authorization) {
       try {
         const { data, status } = await anilibria.post<{ token: null }>(`/accounts/users/auth/logout`);
+        this.token = undefined;
         anilibria.defaults.headers.common.Authorization = undefined;
         return { data, status };
       } catch (error) {

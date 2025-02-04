@@ -7,7 +7,7 @@ export class Password {
     this.urlPassword = "https://anilibria.top/api/v1/accounts/users/auth/password/";
   }
 
-  /**
+  /**ddddddd
    * Changes your password.
    * The user must be logged in
    */
