@@ -1,31 +1,36 @@
-import axios from "axios";
+import { anilibria } from "../lib/settings";
 
+// TODO протестировать класс
+
+/**
+ * @description A class for working with the functionality of changing and restoring a user's password.
+ * @experimental The class has not been tested yet. It is unstable
+ */
 export class Password {
-   protected urlPassword: string;
-
-  constructor() {
-    this.urlPassword = "https://anilibria.top/api/v1/accounts/users/auth/password/";
-  }
-
-  /**ddddddd
-   * Changes your password.
-   * The user must be logged in
+  /**
+   * @description Changes your password.The user must be logged in
+   * @param token Token
+   * @param password Password user
+   * @param passwordConfirmation Confirmation password
    */
   public swapPasswordWithUseToken = async (token: string, password: string, passwordConfirmation: string) => {
 
-    const request = await axios.post(`${this.urlPassword}reset/`, {
+    const { status, data } = await anilibria.post(`/accounts/users/auth/password/reset/`, {
       password,
       password_confirmation: passwordConfirmation,
       token
     });
 
-    return request.status;
+    return { status, data };
   };
-
+  /**
+   * @description Send mail on your email.
+   * @param email Email
+   */
   public sendEmail = async (email: string) => {
-    const request = await axios.post(`${this.urlPassword}forget/`, {
+    const { status, data } = await anilibria.post(`/accounts/users/auth/password/forget/`, {
       email
     });
-    return request.status;
+    return { status, data };
   };
 }
