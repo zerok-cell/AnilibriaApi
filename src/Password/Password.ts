@@ -9,6 +9,8 @@ export class Password {
   /**
    * @description Changes your password.The user must be logged in
    * @param token Token
+   * @function swapPasswordWithUseToken
+   * @async
    * @param password Password user
    * @param passwordConfirmation Confirmation password
    */
